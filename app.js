@@ -4,6 +4,7 @@ const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs')
 
+const route = require('./helper/route.js')
 // const server = http.createServer((req,res) => {
 // 	res.statusCode = 200;
 // 	res.setHeader('Content-Type', 'text/plain');
@@ -21,14 +22,25 @@ const fs = require('fs')
 // });
 
 const server = http.createServer((req,res) => {
+	// console.log(req);	
 	const filePath = path.join(conf.root, req.url);
+
+	//  回调优化
+	route(req, res, filePath)
+	//  回调优化
+
+
+	//  回调未优化
+	/*
 	fs.stat(filePath, (err, stats) => {
+		// error
 		if(err){
 			res.statusCode = 404;
 			res.setHeader('Content-Type', 'text/plain');
 			res.end(`${filePath} is not a directory or file`);
 			return;
 		}
+
 		if(stats.isFile()){ // 是否是文件
 			res.statusCode = 200;
 			res.setHeader('Content-Type', 'text/plain');
@@ -36,7 +48,7 @@ const server = http.createServer((req,res) => {
 			// fs.readFile(filePath, (err, data) => {
 			// 	res.end(data)
 			// });
-		} else if(stats.isDirectory()){
+		} else if(stats.isDirectory()){ // 是否是目录
 			fs.readdir(filePath, (err, files) => {
 				res.statusCode = 200;
 				res.setHeader('Content-Type', 'text/plain');
@@ -44,6 +56,10 @@ const server = http.createServer((req,res) => {
 			});
 		}
 	});
+	*/
+	//  回调未优化
+
+
 	// res.statusCode = 200;
 	// res.setHeader('Content-Type', 'text/plain');
 	// res.write(req.url + '\n')
@@ -51,6 +67,7 @@ const server = http.createServer((req,res) => {
 });
 
 server.listen(conf.port, conf.hostname, () => {
+	// 回调函数callback()
 	const addr = `http://${conf.hostname}:${conf.port}`;
 	console.log(`Server started at ${chalk.green(addr)}`);
 });
