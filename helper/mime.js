@@ -1,24 +1,24 @@
 const path = require('path')
 
 const mimeTypes = {
-    'css' : 'text/css',
-    'gif' : 'image/gif',
+    'css': 'text/css',
+    'gif': 'image/gif',
     'html': 'text/html',
-    'ico' : 'image/x-icon',
+    'ico': 'image/x-icon',
     'jpeg': 'image/jpeg',
-    'jpg' : 'image/jpeg',
-    'js'  : 'text/javascript',
+    'jpg': 'image/jpeg',
+    'js': 'text/javascript',
     'json': 'application/json',
-    'png' : 'image/png',
-    'pdf' : 'application/pdf',
-    'svg' : 'image/svg+xml',
-    'swf' : 'application/x-shockwave-flash',
+    'png': 'image/png',
+    'pdf': 'application/pdf',
+    'svg': 'image/svg+xml',
+    'swf': 'application/x-shockwave-flash',
     'tiff': 'image/tiff',
-    'txt' : 'text/plain',
-    'wav' : 'audio/x-wav',
-    'wma' : 'audio/x-ms-wma',
-    'wmv' : 'video/x-ms-wmv',
-    'xml' : 'text/xml'
+    'txt': 'text/plain',
+    'wav': 'audio/x-wav',
+    'wma': 'audio/x-ms-wma',
+    'wmv': 'video/x-ms-wmv',
+    'xml': 'text/xml'
 }
 
 module.exports = (filePath) => {
@@ -27,7 +27,7 @@ module.exports = (filePath) => {
         .pop()
         .toLocaleLowerCase();
 
-    if(!ext){
+    if (!ext) {
         ext = filePath;
     }
 
