@@ -1,25 +1,29 @@
 {
-  "name": "nodejs-static-web-server",
-  "version": "1.0.0",
-  "description": "NodeJs Static Web Server",
-  "main": ".eslintrc.js",
-  "dependencies": {
-    "chalk": "^2.4.1",
-    "eslint": "^5.6.0",
-    "handlebars": "^4.0.12"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Dream-Life/NodeJs-Static-Web-Server.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Dream-Life/NodeJs-Static-Web-Server/issues"
-  },
-  "homepage": "https://github.com/Dream-Life/NodeJs-Static-Web-Server#readme"
+    "name": "nodejs-static-web-server",
+    "version": "0.1.1",
+    "description": "NodeJs Static Web Server",
+    "main": "src/app.js",
+    "bin": {
+        "anydoor": "bin/anydoor"
+    },
+    "dependencies": {
+        "chalk": "^2.4.1",
+        "eslint": "^5.6.0",
+        "handlebars": "^4.0.12",
+        "yargs": "^12.0.2"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Dream-Life/NodeJs-Static-Web-Server.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Dream-Life/NodeJs-Static-Web-Server/issues"
+    },
+    "homepage": "https://github.com/Dream-Life/NodeJs-Static-Web-Server#readme"
 }

@@ -1,11 +1,12 @@
 const fs = require('fs')
 const promisify = require('util').promisify
 const path = require('path')
-const conf = require('../config/defaultConfig.js');
+    // const conf = require('../config/defaultConfig.js');
 const Handlebars = require('handlebars')
 const compress = require('./compress.js')
 const mime = require('./mime.js')
 const range = require('./range.js')
+const isFresh = require('./cache.js')
 
 const stat = promisify(fs.stat)
 const readdir = promisify(fs.readdir)
@@ -15,20 +16,26 @@ const tplPath = path.join(__dirname, '../template/dir.tpl')
 const source = fs.readFileSync(tplPath)
 const template = Handlebars.compile(source.toString())
 
-module.exports = async function(req, res, filePath) {
+module.exports = async function(req, res, filePath, conf) {
     try {
         const stats = await stat(filePath)
         if (stats.isFile()) { // 是否是文件
             const contentType = mime(filePath)
             res.setHeader('Content-Type', contentType);
 
+            if (isFresh(stats, req, res)) {
+                res.statusCode = 304
+                res.end()
+                return
+            }
+
             // range 范围 (拿到文件的部分内容)
             // curl -r 0-10 -i [URL OR FILES]
             let rs;
             const { code, start, end } = range(stats.size, req, res)
-            console.log(code);
-            console.log(start + '-' + end);
-            console.log(stats);
+                // console.log(code);
+                // console.log(start + '-' + end);
+                // console.log(stats);
             if (code === 200) {
                 res.statusCode = 200;
                 rs = fs.createReadStream(filePath)
@@ -60,12 +67,13 @@ module.exports = async function(req, res, filePath) {
             // res.setHeader('Content-Type', 'text/plain');
             res.setHeader('Content-Type', 'text/html');
             const data = {
-                files,
-                title: path.basename(filePath),
-                dir: path.relative(conf.root, filePath)
-            }
-            console.log('filePath:' + filePath);
-            console.log('relative:' + data.dir);
+                    files,
+                    title: path.basename(filePath),
+                    dir: path.relative(conf.root, filePath)
+                }
+                // console.log('filePath:' + filePath);
+                // console.log('relative:' + data.dir);
+
             // res.end(files.join(','))
             res.end(template(data))
         }
